@@ -1,0 +1,291 @@
+// Reset
+@import "_reset";
+
+// Main font
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('../fonts/Roboto/Roboto-Condensed.ttf');
+}
+
+// Weather icons
+// http://www.alessioatzeni.com/meteocons/
+@font-face {
+    font-family: 'MeteoconsRegular';
+    src: url('../fonts/meteo/meteocons-webfont.eot');
+    src: url('../fonts/meteo/meteocons-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/meteo/meteocons-webfont.woff') format('woff'),
+         url('../fonts/meteo/meteocons-webfont.ttf') format('truetype'),
+         url('../fonts/meteo/meteocons-webfont.svg#MeteoconsRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.meteo_icon:before {
+	font-family: 'MeteoconsRegular';
+	content: attr(data-icon);
+}
+
+
+
+body {
+    text-align: center;
+    color: #383838;
+}
+
+
+// Main container
+#app_container {
+    display: inline-block;
+    width: 40rem;
+    margin: 2rem 0 4rem;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1rem;
+    
+    h1 {
+        font-size: 3rem;
+    }
+    
+    // Description of the app
+    #whatisit {
+        margin: 2rem 0;
+        
+        p {
+            margin: .5rem;
+        }
+    }
+    
+    
+    // Location Input + Search results
+    #add_location_div {
+        text-align: center;
+        display: inline-block;
+        margin-bottom: 1rem;
+        position: relative;
+        
+        input {
+            padding:14px; 
+            font-size:24px; 
+            border-radius:4px; 
+            border-style:solid; 
+            border-width:2px; 
+            background-color:#ffffff; 
+            border-color:#383838; 
+            color:#383838;
+        }
+    
+        a {
+            text-decoration: none;
+            color: #4444ff;
+            margin-left: 2rem;
+        }
+        
+        #input_search_results {
+            z-index: 5;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            border: 1px solid #000;
+            
+            li {
+                background-color: #eeeeee;
+                padding: .4rem 1rem;
+
+                &.location_search_result {
+
+                    &:hover {
+                        cursor: pointer;
+                        color: #ff3333;
+                    }
+                }
+            }
+            
+        }
+        
+        
+        
+    }
+    
+    
+    // List of added locations
+    #location_list {
+        
+        padding: 1rem 0;
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            display: inline-block;
+            margin: 1rem 0;
+        }
+        
+        .location_tab_header {
+            background-color: #bbbbbb;
+            padding: .2rem .8rem;
+            margin: 0 .5rem;
+            border-radius: 1rem;
+            color: #000;
+            border: 2px solid #888;
+            
+            &:hover {
+                cursor: pointer;
+                color: #666;
+            }
+            
+            &.active {
+/*                background-color: #bbffbb;*/
+                border: 2px solid #f88;
+
+            }
+        }
+    
+    }
+   
+    
+    // Forescast for the selected location
+    #details_div {
+        
+        width: 100%;
+        max-width: 40rem;
+        
+        overflow: hidden;
+        
+        
+        // Average forecast for the selected location
+        #details_top {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            
+            
+            #details_text {
+                width: 70%;
+                
+                div {
+                    margin: .6rem 0;
+                }
+                
+                // Name of the location
+                #details_text_name {
+                    text-align: left;
+                    font-size: 2.5rem;
+                    margin-bottom: 1rem;
+                }
+                
+                // Average weather in this location
+                #details_text_weather {
+                    font-size: 2rem;
+                }
+                
+                // Average temperature in this location
+                #details_text_temperature {
+                    font-size: 3rem;
+                }
+              
+                
+            }
+        
+            // Icon for the average weather in this location
+            .meteo_icon {
+                display: inline-block;
+                width: 30%;
+                height:200px;
+                font-size: 10rem;
+                line-height: 12rem;
+                vertical-align: baseline;
+            }
+            
+            
+        }
+        
+        
+        // SVG data visualisation bar showing the different temperatures
+        #temperature_bar {
+            width: 100%;
+            
+               
+            g.circle {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            
+           
+        }
+        
+        
+        
+      
+        
+        
+        // Details of the selected API for the selected location
+        #api_details {
+            width: 100%;
+            
+           display: none;
+            
+            margin-top: 1rem;
+            
+            position: relative;
+            align-items: center;
+            
+            
+            // Icon for the weather from this API
+            .meteo_icon {
+                display: inline-block;
+                width: 20%;
+                height: 20%;
+                font-size: 8rem;
+            }
+            
+            // Temperature from this API
+            #api_details_temperature {
+                width: 30%;
+                font-size: 3rem;
+            }
+            
+            
+            #api_details_right {
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                
+                // Weather from this API
+                #api_details_weather {
+                    font-size: 2rem;
+                }
+                
+                // Name and link of the API
+                #api_details_api {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    text-align: right;
+                    
+                    a {
+                        color: inherit;
+                    }
+                }
+                
+            }
+             
+            
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+}
+
+

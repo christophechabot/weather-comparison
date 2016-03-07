@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather comparison</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+<body>
+    
+    
+      
+ <!--Main container      -->
+    <div id="app_container" ng-app="weatherApp" ng-controller="weatherCtrl">   
+    
+        <h1>Weather comparison</h1>  
+       
+       
+       <!--Description of the app-->
+        <div id="whatisit">   
+           
+            <p>
+                We all know that the weather observations are different from one website to another.
+            </p>
+            
+            <p>
+                Here is a little tool allowing you to compare the observations from different websites.
+            </p>
+        </div>  
+             
+             
+        <!--Location Input + Search results-->     
+        <div id="add_location_div">
+                <input ng-keypress="locationInputPressed($event)" ng-model="location" type="text" id="location_input">
+               <!-- <a ng-click="addLocation(location)" href="">Add this Location</a>-->
+                <div id="input_search_results" ng-show="location!=''">
+                    <ul>
+                        <li ng-show="location_search_loading">Searching...</li>
+                        
+                        <li ng-show="!search_results_displayed">Type the first letters of the location and press enter to search</li>
+                        
+                        <li ng-show="(location_search_results.length==0) && (search_results_displayed)">No results</li>
+                        
+                        <li class="location_search_result" ng-repeat="location in location_search_results" ng-click="addLocation(location)">
+                            {{location.place.name}}<!--
+                            -->{{location.place.country=="US"?", " + location.place.state:""}}<!--
+                            -->{{", " + location.place.country}}
+                        </li>
+                        
+                    </ul>
+                </div>
+        </div>
+    
+       
+       <!--List of added locations-->
+        <div id="location_list">
+            <a ng-repeat="location in locations" href="" ng-click="change_location($index)">
+                <span class="location_tab_header" ng-class="{'active': active_location==$index}">
+                    {{location.name}}<!--
+                    -->{{location.country=="US"?", " + location.state:""}}<!--
+                    -->{{", " + location.country}}
+                </span>
+            </a>
+        </div>
+        
+        
+        
+        <!--Forescast for the selected location-->
+        <div id="details_div">
+               
+            <!--Average forecast for the selected location-->
+            <div id="details_top">
+                <div id="details_text">
+                   
+                   <!--Name of the location-->
+                    <div id="details_text_name">
+                        {{locations[active_location].name}}<!--    
+                        -->{{locations[active_location].country=="US"?", " + locations[active_location].state:""}}<!--
+                        -->{{", " + locations[active_location].country}}  
+                             
+                    </div>
+                   
+                   <!--Average weather in this location-->
+                    <div id="details_text_weather">
+                        {{locations[active_location].weather}}
+                    </div>
+                    
+                    <!--Average temperature in this location-->
+                    <div id="details_text_temperature">
+                        {{locations[active_location].temperature + "°C"}}
+                    </div>
+                   
+                    
+                </div>  
+                
+                <!--Icon for the average weather in this location-->                  
+                <span class="meteo_icon" data-icon="{{locations[active_location].weather_icon}}"></span>
+                 
+            </div>                 
+            
+            
+            <!--SVG data visualisation bar showing the different temperatures-->
+            <svg id="temperature_bar">
+                
+            </svg>
+               
+               
+               
+            <!--Details of the selected API for the selected location-->   
+            <div id="api_details" ng-show="current_api!=-1">
+               
+               <!--Icon for the weather from this API-->
+                <span class="meteo_icon" data-icon="{{get_icon(weathers[current_api].weather)}}"></span>
+               
+                <!--Temperature from this API-->   
+                <div id="api_details_temperature">
+                    {{weathers[current_api].temperature}}°C
+                </div>
+                
+                
+                <div id="api_details_right">
+                   
+                   <!--Weather from this API-->
+                    <div id="api_details_weather">
+                        {{weathers[current_api].weather}}
+                    </div>    
+                    
+                    <!--Name and link of the API-->
+                    <div id="api_details_api">
+                        Source: <a href="{{apis[weathers[current_api].api].href}}">
+                            {{apis[weathers[current_api].api].name}}
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    
+    
+    </div>
+    
+    
+    <script src="js/app.js"></script>
+    
+</body>
+</html>
